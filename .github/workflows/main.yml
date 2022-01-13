@@ -38,13 +38,6 @@ jobs:
       - name: Installation
         run: npm install
 
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: https://discord.com/api/webhooks/931161461370290188/${DISCORD_WEBHOOK_TOKEN}
-        uses: Ilshidur/action-discord@master
-        with:
-          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
-
       - name: Build
         run: npm run build:prod
 
