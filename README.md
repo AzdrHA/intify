@@ -1,3 +1,4 @@
+[![Node CI](https://github.com/AzdrHA/intify/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/AzdrHA/intify/actions/workflows/main.yml)
 # Getting Started
 
 ```bash
