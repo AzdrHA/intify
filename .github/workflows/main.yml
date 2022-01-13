@@ -27,9 +27,10 @@ jobs:
 
       - name: Discord
         run: |
-          $WebHook = "https://discord.com/api/webhooks/931161461370290188/nXxzoDVHhc1L06sKcmmXNPCS11aqzBmIk0Lmj0_YlAuJ7OXX3oaZHaHHQRbFR0iUpz_u";
-          $JSON = @"{"embeds": [{ "title": "${env:GITHUB_REPOSITORY}", "description": "${env:RUNNER_NAME} ${env:RUNNER_OS} ${env:RUNNER_ARCH}"}]}"@;
-          Invoke-RestMethod -Uri $WebHook -Method Post -Body $JSON -ContentType "application/json";
+          apk add --update git curl
+          wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+          chmod +x send.sh
+          /bin/ash ./send.sh success $WEBHOOK_URL
 
       - name: Build
         run: npm run build:prod
