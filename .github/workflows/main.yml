@@ -25,12 +25,12 @@ jobs:
       - name: Installation
         run: npm install
 
-      - name: Discord
-        run: |
-          apk add --update git curl
-          wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
-          chmod +x send.sh
-          /bin/ash ./send.sh success $WEBHOOK_URL
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: https://discord.com/api/webhooks/931161461370290188/nXxzoDVHhc1L06sKcmmXNPCS11aqzBmIk0Lmj0_YlAuJ7OXX3oaZHaHHQRbFR0iUpz_u
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
 
       - name: Build
         run: npm run build:prod
