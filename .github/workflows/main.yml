@@ -17,13 +17,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Installation
         run: npm install
+
+      - name: Discord
+        run: |
+          $WebHook = "https://discord.com/api/webhooks/931161461370290188/nXxzoDVHhc1L06sKcmmXNPCS11aqzBmIk0Lmj0_YlAuJ7OXX3oaZHaHHQRbFR0iUpz_u";
+          $JSON = @"{"embeds": [{ "title": "${env:GITHUB_REPOSITORY}", "description": "${env:RUNNER_NAME} ${env:RUNNER_OS} ${env:RUNNER_ARCH}"}]}"@;
+          Invoke-RestMethod -Uri $WebHook -Method Post -Body $JSON -ContentType "application/json";
 
       - name: Build
         run: npm run build:prod
