@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './screens/Home/Home';
-import reportWebVitals from '@app/reportWebVitals';
 import '@scss/index.scss';
 
 ReactDOM.render(
@@ -11,4 +10,3 @@ ReactDOM.render(
     document.getElementById('root'),
 );
 
-reportWebVitals();
