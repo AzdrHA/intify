@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    index: ['./src/index.tsx'],
+    index: ['./src/application.tsx'],
   },
   output: {
     path: path.join(__dirname, '../dist'),
@@ -79,6 +79,12 @@ module.exports = {
         test: /\.(jsx|tsx|js|ts)$/,
         exclude: /(node_modules|bower_components|dist)/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
