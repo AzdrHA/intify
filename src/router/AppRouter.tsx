@@ -26,7 +26,7 @@ export const AppRouter = () => {
           },
         });
         setLoad(true);
-      }).catch((e) => setError(e));
+      });
     } else {
       setLoad(true);
     }

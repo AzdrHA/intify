@@ -1,2 +1,65 @@
 @import "variables";
 @import "loader";
+
+* {
+  font-family: "Whitney Medium", sans-serif;
+}
+
+.icon-svg {
+  transition: all .2s ease;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  color: $primary;
+}
+
+.tooltip {
+  z-index: 999999;
+  transition: all 5ms ease-in-out;
+  padding: 8px 12px;
+  min-height: 18px;
+  line-height: 18px;
+  max-width: 200px;
+  position: absolute;
+  background: $dark-100;
+  border-radius: 5px;
+  color: $primary;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  hyphens: auto;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    width: 12px;
+    height: 12px;
+    background: $dark-100;
+    top: calc(50% - 1px);
+
+    transform: rotate(45deg) translate(-50%);
+  }
+}
+
+body {
+  background: #292929;
+}
+
+.rounded-50 {
+  border-radius: 50%;
+}
+
+.testTransition {
+  transition: all .2s ease;
+
+  &:hover {
+    .icon-svg {
+      color: #ffffff;
+    }
+  }
+}

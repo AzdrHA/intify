@@ -1,6 +1,8 @@
 import {User} from '@app/Type/User';
 import {faker} from '@faker-js/faker';
 import {Guild} from '@app/Type/Guild';
+import {Channel} from '@app/Type/Channel';
+import {ChannelType} from '@app/Type/ChannelType';
 
 
 /**
@@ -31,9 +33,24 @@ export const mockGuildData = () => {
   faker.name.findName();
 };
 
+export const mockChannel = (): Promise<Channel[]> => {
+  const channels: Channel[] = [];
+  for (let i = 1; i < 10; i++) {
+    channels.push({
+      topic: 'text',
+      type: ChannelType.TYPE_TEXT,
+      id: i.toString(),
+      name: faker.company.bs(),
+      createdAt: new Date(),
+      updateAt: new Date(),
+    });
+  }
+  return promise(channels);
+};
+
 export const mockAccount = (): Promise<User> => {
   const guilds: Guild[] = [];
-  for (let i = 1; i < 30; i++) {
+  for (let i = 1; i < 5; i++) {
     guilds.push({
       id: i.toString(),
       name: faker.company.bs(),

@@ -5,7 +5,10 @@ module.exports = {
   theme: {
     colors: {
       'primary': '#8290C4FF',
-      'dark': '#262626',
+      'dark': '#292929',
+      'dark-100': '#1d1d1d',
+      'dark-200': '#262626',
+
 
       'transparent': 'transparent',
       'current': 'currentColor',
@@ -19,6 +22,12 @@ module.exports = {
       'bermuda': '#78dcca',
     },
     extend: {},
+  },
+  variants: {
+    extend: {
+      borderRadius: ['hover', 'focus'],
+      transitionTimingFunction: ['hover', 'focus'],
+    },
   },
   plugins: [],
 };

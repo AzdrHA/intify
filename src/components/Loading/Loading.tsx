@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Loading = () => {
-  return <div className="fixed flex w-full h-full justify-center items-center bg-dark">
+  return <div className="fixed flex w-full h-full justify-center items-center bg-body">
     <div>
       <div className="w-14 h-14 border-4 border-solid mx-auto animate-loader border-l-0 rounded-full"/>
       <div className="flex flex-col mt-4">
