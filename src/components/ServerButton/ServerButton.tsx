@@ -1,20 +1,25 @@
 import React, {FC} from 'react';
 import {HomeIcon} from '@components/Icons/HomeIcon';
 import {PlusIcon} from '@components/Icons/PlusIcon';
-import {Guild} from '@app/Type/Guild';
 import {useNavigate} from 'react-router-dom';
+import {Member} from '@app/Type/Member';
+import {routes} from '@app/router/routes';
+import {useParams} from 'react-router';
+import {GuildRouter} from '@app/Type/GuildRouter';
 
-interface ServerButtonProps extends Partial<Guild> {
+interface ServerButtonProps extends Partial<Member> {
   type: 'HOME' | 'SERVER' | 'ADD';
   name: string;
 }
 
 export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) => {
   const location = useNavigate();
+  const urlParams = useParams<GuildRouter>();
+
   const tooltip: React.MouseEventHandler<HTMLElement> = (e) => {
     const tooltip = document.createElement('div');
     tooltip.classList.add('tooltip');
-    tooltip.innerText = String(props.name);
+    tooltip.innerText = String(props.guild?.name);
     tooltip.style.left = e.currentTarget.getBoundingClientRect().right + 20 + 'px';
     tooltip.style.top = e.currentTarget.getBoundingClientRect().top + (e.currentTarget.getBoundingClientRect().height / 4.5) + 'px';
     document.body.append(tooltip);
@@ -30,8 +35,12 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
 
   const onClick = () => {
     if (props.type === 'HOME') return location('/@me');
-    if (props.type === 'SERVER') {
-      location(`/channel/${Math.random().toString().split('.')[1]}/${Math.random().toString().split('.')[1]}`);
+    if (props.type === 'SERVER' && (props.guild && (urlParams.guild !== props.guild.id.toString()))) {
+      location(
+          routes.app.chat
+              .replace(':guild', props.guild.id)
+              .replace(':channel', props.guild.id),
+      );
     }
   };
 

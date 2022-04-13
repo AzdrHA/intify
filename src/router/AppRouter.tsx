@@ -1,34 +1,23 @@
 import React, {useEffect, useState} from 'react';
+import {Loading} from '@components/Loading/Loading';
+import {makeRequest} from '@app/api/makeRequest';
+import {ApiConfig} from '@app/config/ApiConfig';
+import {useAppDispatch, useAppSelector} from '@app/reducers/hook';
 import {Route, Routes} from 'react-router-dom';
 import {routes} from '@app/router/routes';
-import {mockAccount} from '../../__mock__/MockServiceApi';
-import {Loading} from '@components/Loading/Loading';
-import {useAppDispatch, useAppSelector} from '@app/reducers/hook';
 import {Application} from '@screens/Application';
 
 export const AppRouter = () => {
-  const [isLoad, setLoad] = useState(false);
-  const [error, setError] = useState();
   const userInfo = useAppSelector((state) => state.user);
+  const [isLoad, setLoad] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!userInfo.id) {
-      mockAccount().then((user) => {
-        dispatch({
-          type: 'ADD_USER_ACTION', payload: {
-            id: user.id,
-            username: user.username,
-            status: user.status,
-            token: 'Coucou',
-            guilds: user.guilds,
-            image: user.image,
-          },
-        });
+    if (userInfo) {
+      makeRequest(ApiConfig.users.account, 'GET').then((user) => {
+        dispatch({type: 'ADD_USER_ACTION', payload: user});
         setLoad(true);
       });
-    } else {
-      setLoad(true);
     }
   }, []);
 
