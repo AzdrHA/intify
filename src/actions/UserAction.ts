@@ -1,18 +1,20 @@
 import {User} from '@app/Type/User';
-import {AnyAction} from 'redux';
+import {PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: Partial<User> = {};
 
-export type UserAction = 'ADD_USER_ACTION'
+export enum UserActionType {
+  ADD_USER_ACTION = 'ADD_USER_ACTION'
+}
 
 /**
  * @param {initialState} state
- * @param {AnyAction} action
+ * @param {PayloadAction<User, UserActionType>} action
  * @return {User}
  */
-const UserAction = (state = {...initialState}, action: AnyAction) => {
+const UserAction = (state: Partial<User> = {...initialState}, action: PayloadAction<Partial<User>, UserActionType>): Partial<User> => {
   switch (action.type) {
-    case 'ADD_USER_ACTION':
+    case UserActionType.ADD_USER_ACTION:
       return {...state, ...action.payload};
     default:
       return state;

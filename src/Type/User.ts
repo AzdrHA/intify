@@ -1,13 +1,13 @@
 import {Image} from '@app/Type/Image';
 import {UserStatus} from '@app/Type/UserStatus';
-import {Guild} from '@app/Type/Guild';
+import {Member} from '@app/Type/Member';
 
 export type User = {
   id: string;
   username: string;
   token: string;
   status?: UserStatus | null;
-  guilds: Guild[];
+  members?: Member[] | [];
   image?: Image | null;
   updateAt?: Date | null;
   createdAt?: Date | null;
