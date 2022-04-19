@@ -6,8 +6,8 @@ type HeaderGuildNameProps = {
 
 export const HeaderGuildName: FC<HeaderGuildNameProps> = (props: HeaderGuildNameProps) => {
   return (
-    <div>
+    <p>
       {props.name}
-    </div>
+    </p>
   );
 };

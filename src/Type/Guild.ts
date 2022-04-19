@@ -6,7 +6,7 @@ export type Guild = {
   // members: string;
   name: string;
   image?: Image | null;
-  channels?: Channel[] | null
+  channels: Channel[] | []
   updateAt: Date;
   createdAt: Date;
 }

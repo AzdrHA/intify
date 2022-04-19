@@ -9,7 +9,7 @@ type ServerSideProps = {
 
 export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
   return (
-    <div className="w-14 h-full max-h-screen bg-dark-100 overflow-y-auto">
+    <div className="bg-dark-100 section-server-container">
       <div className="py-1.5">
         <ServerButton name={'Home'} type={'HOME'}/>
 

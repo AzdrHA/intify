@@ -2,8 +2,8 @@ import React from 'react';
 
 export const HeaderDM = () => {
   return (
-    <div>
+    <p>
       HeaderDM
-    </div>
+    </p>
   );
 };

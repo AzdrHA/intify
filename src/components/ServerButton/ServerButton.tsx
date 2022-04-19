@@ -6,6 +6,7 @@ import {Member} from '@app/Type/Member';
 import {routes} from '@app/router/routes';
 import {useParams} from 'react-router';
 import {GuildRouter} from '@app/Type/GuildRouter';
+import {ChannelType} from '@app/Type/Channel';
 
 interface ServerButtonProps extends Partial<Member> {
   type: 'HOME' | 'SERVER' | 'ADD';
@@ -19,7 +20,7 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
   const tooltip: React.MouseEventHandler<HTMLElement> = (e) => {
     const tooltip = document.createElement('div');
     tooltip.classList.add('tooltip');
-    tooltip.innerText = String(props.guild?.name);
+    tooltip.innerText = String(props.guild?.name ?? props.name);
     tooltip.style.left = e.currentTarget.getBoundingClientRect().right + 20 + 'px';
     tooltip.style.top = e.currentTarget.getBoundingClientRect().top + (e.currentTarget.getBoundingClientRect().height / 4.5) + 'px';
     document.body.append(tooltip);
@@ -36,10 +37,11 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
   const onClick = () => {
     if (props.type === 'HOME') return location('/@me');
     if (props.type === 'SERVER' && (props.guild && (urlParams.guild !== props.guild.id.toString()))) {
+      const firstTextChannel = props.guild.channels?.filter((channel) => channel.type === ChannelType.GUILD_TEXT);
       location(
           routes.app.chat
               .replace(':guild', props.guild.id)
-              .replace(':channel', props.guild.id),
+              .replace(':channel', (firstTextChannel && firstTextChannel[0]) ? firstTextChannel[0].id: '0' ),
       );
     }
   };

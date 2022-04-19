@@ -35,7 +35,7 @@ export const mockGuildData = () => {
 
 export const mockChannel = (): Promise<Channel[]> => {
   const channels: Channel[] = [];
-  for (let i = 1; i < 10; i++) {
+  for (let i = 1; i < 90; i++) {
     channels.push({
       topic: 'text',
       type: ChannelType.TYPE_TEXT,
