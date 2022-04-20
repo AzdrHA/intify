@@ -11,6 +11,9 @@ import {Guild} from '@app/Type/Guild';
 import {ChannelSide} from '@components/ChannelSide/ChannelSide';
 import {UserFriendsSide} from '@components/UserFriendsSide/UserFriendsSide';
 import {HeaderGuildChat} from '@components/Guild/HeaderGuildChat/HeaderGuildChat';
+import {UserInformation} from '@components/UserInformation/UserInformation';
+import {HashTagIcon} from '@components/Icons/HashTagIcon';
+import {Chat} from '@components/Chat/Chat';
 
 type ApplicationProps = {
   view: 'private' | 'guild'
@@ -39,26 +42,21 @@ export const Application: FC<ApplicationProps> = (props: ApplicationProps) => {
               }
             </div>
           </div>
-          <div className="mx-2 overflow-hidden overflow-y-auto h-full text-white my-2">
+          <>
             {
               (props.view === 'guild' && guild && guild.channels) ?
                 <ChannelSide channels={guild.channels}/> : <UserFriendsSide/>
             }
-          </div>
-          {/*
-        <div className="overflow-hidden h-5">
-          <>
-            <UserInformation/>
           </>
-        </div>*/}
-        </div>
-        <div className="w-full">
-          <div className="chat-header-container overflow-hidden h-12 text-white">
-            {
-              (props.view === 'guild' && guild && guild.channels) ?
-                <HeaderGuildChat channel={guild.channels.find((channel) => channel.id == String(urlParams.channel))}/> : null
-            }
+          <div className="overflow-hidden user-info-cotnainer">
+            <UserInformation/>
           </div>
+        </div>
+        <div className="w-full section-chat-content">
+          {
+            (props.view === 'guild' && guild && guild.channels) ?
+              <Chat guild={guild}/> : null
+          }
         </div>
       </div>
     </div>

@@ -225,3 +225,308 @@ body {
     }
   }
 }
+
+.section-chat-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-chat-messages {
+  //padding: .25rem 1.25rem;
+  position: relative;
+  //padding-right: 15px;
+  //padding-left: 15px;
+  //padding-bottom: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 100%;
+
+  &::-webkit-scrollbar {
+    padding: 10px;
+    width: 8px;
+    height: 8px;
+    background-color: darken($dark-200, 4); /* or add it to the track */
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 2px;
+    background: darken($dark-200, 10);
+    border-radius: 5px;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  .divider-message {
+    width: 100%;
+    height: 1px;
+    background: white;
+    margin: 1rem 0;
+    opacity: .1;
+  }
+
+  .section-chat-channel-info-container {
+    padding: 1rem 1.25rem .25rem;
+    margin-top: auto;
+    .section-chat-channel-info-icon {
+      width: 64px;
+      height: 64px;
+      background: lighten($dark-200, 5);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon-hashtag {
+        margin-top: 3px;
+        max-width: 32px;
+      }
+    }
+
+    .section-chat-channel-info-content {
+      margin-top: 1rem;
+      font-family: "Whitney Book Regular", sans-serif;
+
+      .channel-name {
+        color: $primary;
+      }
+
+      .section-chat-channel-info-title {
+        font-family: "Whitney Bold", sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+      .section-chat-channel-info-subtitle {
+        margin-top: 1rem;
+        opacity: .7;
+      }
+    }
+  }
+
+  .message-wrapper-container {
+    margin-top: 1rem;
+    word-break: break-all;
+    transition: all .1s ease;
+    position: relative;
+    display: flex;
+    user-select: auto;
+    font-family: "Whitney Book Regular", sans-serif;
+    padding: .25rem 1.25rem;
+    margin-right: 10px;
+
+    &:hover {
+      .message-params-container {
+        display: block;
+      }
+    }
+
+    .message-params-container {
+      transition: all .2s ease-in-out;
+      display: none;
+      border-radius: 5px;
+      box-shadow: 0 0 2px 1px rgba(#000, .2);
+      overflow: hidden;
+      $message-params-height: 28px;
+      position: absolute;
+      top: calc((#{-$message-params-height} / 2));
+      right: calc(#{$message-params-height} / 2);
+      background: lighten($dark-200, 2);
+      height: $message-params-height;
+
+      &:hover {
+        box-shadow: 0 3px 3px 1px rgba(#000, .2);
+      }
+
+      button {
+        transition: all .1s ease-in-out;
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        background: lighten($dark-200, 2);
+        border: none;
+        &:hover {
+          background: lighten($dark-200, 7);
+        }
+      }
+    }
+    //
+    /*margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: .5rem;
+
+    &:first-child {
+      margin-top: 1rem;
+    }*/
+
+    &:before {
+      transition: height .1s linear;
+      transform: translate(0, -50%);
+      top: 50%;
+      left: 0;
+      content: '';
+      position: absolute;
+      height: 0;
+      width: 2px;
+      background: $primary;
+    }
+
+    &:last-child {
+      margin-bottom: 1rem;
+    }
+
+    &:hover {
+      background: darken($dark-200, 1.5);
+
+      &:before {
+        height: 100%;
+      }
+    }
+
+    .message-content {
+      white-space: pre-line;
+    }
+
+    .message-author-avatar-container {
+      min-width: 48px;
+      height: 48px;
+      max-width: 48px;
+      max-height: 48px;
+      overflow: hidden;
+      border-radius: 15px;
+      background: lighten($dark-200, 5%);
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .message-content-container {
+      margin-left: .5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .message-attachment-image-container {
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        border-radius: 5px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+
+    .message-info-container {
+      margin-bottom: .3rem;
+      display: flex;
+      margin-top: 2px;
+      align-items: center;
+
+      .message-info-author-name {
+        font-family: "Whitney Medium", sans-serif;
+        font-size: 1rem;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+
+      .message-info-time {
+        font-family: "Whitney Light Regular", sans-serif;
+        margin-left: .5rem;
+        margin-top: auto;
+        font-size: 13px;
+        opacity: .5;
+      }
+    }
+
+    .message-wrapper-content {
+      margin-bottom: 2px;
+      font-family: "Whitney Light Regular", sans-serif;
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
+  }
+}
+
+
+.input-message-container {
+  padding-bottom: 1.5rem;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+
+  .input-message-content {
+    border-radius: 10px;
+    background: lighten($dark-200, 5%);
+    display: flex;
+    align-items: center;
+
+    .input-message-send-files {
+      margin: 0 1rem;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      background: lighten($dark-200, 50%);
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon-svg {
+        width: 12px;
+        height: 12px;
+        margin-top: 1.9px;
+        margin-left: 1.8px;
+        min-width: 12px !important;
+        min-height: 12px !important;
+        color: black;
+      }
+    }
+
+    .input-message {
+      font-size: 14px;
+      padding: 10px;
+      background: none;
+      position: relative;
+      overflow-x: hidden;
+      pointer-events: all;
+      border: none;
+      box-sizing: border-box;
+      overflow-y: auto;
+      max-height: 50vh;
+      outline: none;
+      width: 100%;
+      color: white;
+      font-family: "Whitney Light Regular", sans-serif;
+      -moz-user-modify: read-write;
+      -webkit-user-modify: read-write-plaintext-only;
+      user-modify: read-write;
+
+      &:empty:after {
+        content: attr(data-placeholder);
+        color: white;
+        opacity: .4;
+        margin-left: 1px;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.user-info-cotnainer {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  box-shadow: 0 0 3px rgba(#000000, .5);
+}

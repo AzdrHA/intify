@@ -5,6 +5,8 @@ import {useParams} from 'react-router';
 import {GuildRouter} from '@app/Type/GuildRouter';
 import {HashTagIcon} from '@components/Icons/HashTagIcon';
 import {SpeakerIcon} from '@components/Icons/SpeakerIcon';
+import {routes} from '@app/router/routes';
+import {useNavigate} from 'react-router-dom';
 
 type ChannelSideProps = {
   channels: Channel[]
@@ -14,6 +16,7 @@ export const ChannelSide: FC<ChannelSideProps> = (props: ChannelSideProps) => {
   const params = useParams<GuildRouter>();
   const channelRef = useRef<HTMLDivElement[]>([]);
   const [current, setCurrent] = useState<HTMLDivElement>();
+  const location = useNavigate();
 
   const clickChannel = (channel: HTMLDivElement, channelInfo: Channel) => {
     if (current === channel) return;
@@ -27,24 +30,36 @@ export const ChannelSide: FC<ChannelSideProps> = (props: ChannelSideProps) => {
   };
 
   useEffect(() => {
-    console.log(params.channel);
     const currentChannel = props.channels.find((channel) => channel.id == String(params.channel));
-    const channel = channelRef.current[props.channels.indexOf(currentChannel)];
-    clickChannel(channel, currentChannel);
+    if (currentChannel) {
+      const channel = channelRef.current[props.channels.indexOf(currentChannel)];
+      clickChannel(channel, currentChannel);
+    }
   }, []);
 
+  const channelClick = (channel: Channel, channelHtml: HTMLDivElement) => {
+    if (channel.type !== ChannelType.GUILD_TEXT) return;
+    clickChannel(channelHtml, channel);
+    location(
+        routes.app.chat
+            .replace(':guild', String(params.guild))
+            .replace(':channel', channel.id));
+  };
+
   return (
-    <div className={'channel-section-container'}>
+    <div className={'mx-2 my-2 channel-section-container'}>
       <div className={'channel-section-content'}>
         {
           props.channels.map((channel, i) => {
             return <div
+              onClick={() => channelClick(channel, channelRef.current[i])}
               className={`channel-container ${ChannelType[channel.type]}`}
               key={i}
               ref={(ref) => channelRef.current[i] = ref as HTMLDivElement}>
               <div className={`channel ${ChannelType[channel.type]}`}>
                 {
-                  channel.type === ChannelType.GUILD_TEXT ? <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ? <SpeakerIcon/> : null
+                  channel.type === ChannelType.GUILD_TEXT ? <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ?
+                    <SpeakerIcon/> : null
                 }
                 <div className={channel.type === ChannelType.GUILD_CATEGORY ? 'channel-name category' : 'channel-name'}>
                   {UtilsStr.formatToChannelName(channel.name)}
@@ -54,7 +69,6 @@ export const ChannelSide: FC<ChannelSideProps> = (props: ChannelSideProps) => {
           })
         }
       </div>
-
     </div>
   );
 };
