@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form, Field} from 'react-final-form';
 import {makeRequest} from '@app/api/makeRequest';
-import {ApiConfig} from '@app/config/ApiConfig';
-import {LoginRes} from '@app/Type/Auth/LoginRes';
+import {ApiConfig} from '@app/config/apiConfig';
+import {LoginRes} from '@app/type/Auth/LoginRes';
 import Cookies from 'js-cookie';
 import {useAppDispatch} from '@app/reducers/hook';
 import {useNavigate} from 'react-router-dom';

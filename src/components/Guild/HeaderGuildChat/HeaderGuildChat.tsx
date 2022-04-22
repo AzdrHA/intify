@@ -1,7 +1,7 @@
-import {Channel} from '@app/Type/Channel';
+import {Channel} from '@app/Type/Channel/Channel';
 import React, {FC} from 'react';
 import {UtilsStr} from '@app/utils/UtilsStr';
-import {HashTagIcon} from '@components/Icons/HashTagIcon';
+import {HashTagIcon} from '@components/style/Icons/HashTagIcon';
 
 type HeaderGuildChatProps = {
   channel?: Channel|null

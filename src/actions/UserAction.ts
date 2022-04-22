@@ -1,4 +1,4 @@
-import {User} from '@app/Type/User';
+import {User} from '@app/type/User/User';
 import {PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: Partial<User> = {};

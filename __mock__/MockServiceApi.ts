@@ -1,9 +1,7 @@
-import {User} from '@app/Type/User';
 import {faker} from '@faker-js/faker';
-import {Guild} from '@app/Type/Guild';
-import {Channel} from '@app/Type/Channel';
-import {ChannelType} from '@app/Type/ChannelType';
-
+import {Channel, ChannelType} from '@app/type/Channel/Channel';
+import {User} from '@app/type/User/User';
+import {Guild} from '@app/type/Guild/Guild';
 
 /**
  * @param {number} min default 600
@@ -21,9 +19,9 @@ const rdPing = (min: number = 600, max: number = 1680) => {
 const promise = (result: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      /* if ((Math.random() * 100 < (100 / 6))) {
+      if ((Math.random() * 100 < (100 / 6))) {
         return reject(result);
-      }*/
+      }
       return resolve(result);
     }, rdPing());
   });
@@ -37,8 +35,9 @@ export const mockChannel = (): Promise<Channel[]> => {
   const channels: Channel[] = [];
   for (let i = 1; i < 90; i++) {
     channels.push({
+      position: 0,
       topic: 'text',
-      type: ChannelType.TYPE_TEXT,
+      type: ChannelType.GUILD_TEXT,
       id: i.toString(),
       name: faker.company.bs(),
       createdAt: new Date(),
@@ -54,7 +53,7 @@ export const mockAccount = (): Promise<User> => {
     guilds.push({
       id: i.toString(),
       name: faker.company.bs(),
-      channels: null,
+      channels: [],
       image: null,
       createdAt: new Date(),
       updateAt: new Date(),

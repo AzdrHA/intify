@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {Channel, ChannelType} from '@app/Type/Channel';
+import {Channel, ChannelType} from '@app/Type/Channel/Channel';
 import {UtilsStr} from '@app/utils/UtilsStr';
 import {useParams} from 'react-router';
-import {GuildRouter} from '@app/Type/GuildRouter';
-import {HashTagIcon} from '@components/Icons/HashTagIcon';
-import {SpeakerIcon} from '@components/Icons/SpeakerIcon';
-import {routes} from '@app/router/routes';
+import {GuildRouter} from '@app/Type/Router/GuildRouter';
+import {HashTagIcon} from '@components/style/Icons/HashTagIcon';
+import {SpeakerIcon} from '@components/style/Icons/SpeakerIcon';
+import {routesConfig} from '@app/config/routesConfig';
 import {useNavigate} from 'react-router-dom';
 
 type ChannelSideProps = {
@@ -41,7 +41,7 @@ export const ChannelSide: FC<ChannelSideProps> = (props: ChannelSideProps) => {
     if (channel.type !== ChannelType.GUILD_TEXT) return;
     clickChannel(channelHtml, channel);
     location(
-        routes.app.chat
+        routesConfig.app.chat
             .replace(':guild', String(params.guild))
             .replace(':channel', channel.id));
   };

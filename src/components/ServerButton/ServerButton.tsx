@@ -1,14 +1,14 @@
 import React, {FC} from 'react';
-import {HomeIcon} from '@components/Icons/HomeIcon';
-import {PlusIcon} from '@components/Icons/PlusIcon';
+import {HomeIcon} from '@components/style/Icons/HomeIcon';
+import {PlusIcon} from '@components/style/Icons/PlusIcon';
 import {useNavigate} from 'react-router-dom';
-import {Member} from '@app/Type/Member';
-import {routes} from '@app/router/routes';
+import {GuildMember} from '@app/Type/Guild/GuildMember';
+import {routesConfig} from '@app/config/routesConfig';
 import {useParams} from 'react-router';
-import {GuildRouter} from '@app/Type/GuildRouter';
-import {ChannelType} from '@app/Type/Channel';
+import {GuildRouter} from '@app/Type/Router/GuildRouter';
+import {ChannelType} from '@app/Type/Channel/Channel';
 
-interface ServerButtonProps extends Partial<Member> {
+interface ServerButtonProps extends Partial<GuildMember> {
   type: 'HOME' | 'SERVER' | 'ADD';
   name: string;
 }
@@ -39,7 +39,7 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
     if (props.type === 'SERVER' && (props.guild && (urlParams.guild !== props.guild.id.toString()))) {
       const firstTextChannel = props.guild.channels?.filter((channel) => channel.type === ChannelType.GUILD_TEXT);
       location(
-          routes.app.chat
+          routesConfig.app.chat
               .replace(':guild', props.guild.id)
               .replace(':channel', (firstTextChannel && firstTextChannel[0]) ? firstTextChannel[0].id: '0' ),
       );

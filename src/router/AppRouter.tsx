@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Loading} from '@components/Loading/Loading';
+import {Loading} from '@components/style/Loading/Loading';
 import {makeRequest} from '@app/api/makeRequest';
-import {ApiConfig} from '@app/config/ApiConfig';
+import {ApiConfig} from '@app/config/apiConfig';
 import {useAppDispatch, useAppSelector} from '@app/reducers/hook';
 import {Route, Routes} from 'react-router-dom';
-import {routes} from '@app/router/routes';
+import {routesConfig} from '@app/config/routesConfig';
 import {Application} from '@screens/Application';
 
 export const AppRouter = () => {
@@ -22,7 +22,7 @@ export const AppRouter = () => {
   }, []);
 
   return !isLoad ? <Loading/> : <Routes>
-    <Route path={routes.app.home} element={<Application view={'private'}/>}/>
-    <Route path={routes.app.chat} element={<Application view={'guild'}/>}/>
+    <Route path={routesConfig.app.home} element={<Application view={'private'}/>}/>
+    <Route path={routesConfig.app.chat} element={<Application view={'guild'}/>}/>
   </Routes>;
 };

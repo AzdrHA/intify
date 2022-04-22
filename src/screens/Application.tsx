@@ -4,15 +4,13 @@ import {ServerSide} from '@components/ServerSide/ServerSide';
 import {HeaderGuildName} from '@components/Guild/HeaderGuildName/HeaderGuildName';
 import {HeaderDM} from '@components/DM/HeaderDM/HeaderDM';
 import {useParams} from 'react-router';
-import {GuildRouter} from '@app/Type/GuildRouter';
+import {GuildRouter} from '@app/Type/Router/GuildRouter';
 import {makeRequest} from '@app/api/makeRequest';
-import {ApiConfig} from '@app/config/ApiConfig';
-import {Guild} from '@app/Type/Guild';
+import {ApiConfig} from '@app/config/apiConfig';
+import {Guild} from '@app/Type/Guild/Guild';
 import {ChannelSide} from '@components/ChannelSide/ChannelSide';
 import {UserFriendsSide} from '@components/UserFriendsSide/UserFriendsSide';
-import {HeaderGuildChat} from '@components/Guild/HeaderGuildChat/HeaderGuildChat';
 import {UserInformation} from '@components/UserInformation/UserInformation';
-import {HashTagIcon} from '@components/Icons/HashTagIcon';
 import {Chat} from '@components/Chat/Chat';
 
 type ApplicationProps = {

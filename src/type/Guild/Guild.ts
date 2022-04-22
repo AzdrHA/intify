@@ -1,5 +1,5 @@
 import {Image} from '@app/Type/Image';
-import {Channel} from '@app/Type/Channel';
+import {Channel} from '@app/Type/Channel/Channel';
 
 export type Guild = {
   id: string;

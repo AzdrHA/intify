@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {ServerButton} from '@components/ServerButton/ServerButton';
-import {Member} from '@app/Type/Member';
-import {Divider} from '@components/Divider';
+import {GuildMember} from '@app/Type/Guild/GuildMember';
+import {Divider} from '@components/style/divider';
 
 type ServerSideProps = {
-  guildMembers: Member[] | undefined
+  guildMembers: GuildMember[] | undefined
 }
 
 export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
