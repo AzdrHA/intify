@@ -1,4 +1,4 @@
-import {Guild} from '@app/Type/Guild/Guild';
+import {Guild} from '@app/type/Guild/Guild';
 
 export type GuildMember = {
   id: number;

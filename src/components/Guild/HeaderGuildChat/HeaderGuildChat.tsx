@@ -1,16 +1,12 @@
-import {Channel} from '@app/Type/Channel/Channel';
 import React, {FC} from 'react';
 import {UtilsStr} from '@app/utils/UtilsStr';
-import {HashTagIcon} from '@components/style/Icons/HashTagIcon';
+import {HashTagIcon} from '@components/style/icon/HashTagIcon';
+import {Channel} from '@app/type/Channel/Channel';
 
-type HeaderGuildChatProps = {
-  channel?: Channel|null
-}
-
-export const HeaderGuildChat: FC<HeaderGuildChatProps> = (props: HeaderGuildChatProps) => {
+export const HeaderGuildChat: FC<Channel> = (props: Channel) => {
   return (
     <div className={'channel'}>
-      <HashTagIcon/> <p className={'channel-name'}>{UtilsStr.formatToChannelName(props.channel?.name)}</p>
+      <HashTagIcon/> <p className={'channel-name'}>{UtilsStr.formatToChannelName(props.name)}</p>
     </div>
   );
 };

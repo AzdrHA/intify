@@ -1,61 +1,44 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useAppSelector} from '@app/reducers/hook';
-import {ServerSide} from '@components/ServerSide/ServerSide';
-import {HeaderGuildName} from '@components/Guild/HeaderGuildName/HeaderGuildName';
-import {HeaderDM} from '@components/DM/HeaderDM/HeaderDM';
+import {ServerSide} from '@components/layout/ServerSide';
 import {useParams} from 'react-router';
-import {GuildRouter} from '@app/Type/Router/GuildRouter';
 import {makeRequest} from '@app/api/makeRequest';
 import {ApiConfig} from '@app/config/apiConfig';
-import {Guild} from '@app/Type/Guild/Guild';
-import {ChannelSide} from '@components/ChannelSide/ChannelSide';
-import {UserFriendsSide} from '@components/UserFriendsSide/UserFriendsSide';
-import {UserInformation} from '@components/UserInformation/UserInformation';
-import {Chat} from '@components/Chat/Chat';
-
-type ApplicationProps = {
-  view: 'private' | 'guild'
-}
+import {ApplicationProps} from '@app/type/Props/ApplicationProps';
+import {GuildRouter} from '@app/type/Router/GuildRouter';
+import {Guild} from '@app/type/Guild/Guild';
+import {ChannelSideLayout} from '@components/layout/Channel/ChannelSideLayout';
+import {ChatLayout} from '@components/layout/Chat/ChatLayout';
 
 export const Application: FC<ApplicationProps> = (props: ApplicationProps) => {
   const userInfo = useAppSelector((state) => state.user);
   const urlParams = useParams<GuildRouter>();
-  const [guild, setGuild] = useState<Guild|null>();
+  const [guild, setGuild] = useState<Guild>();
 
   useEffect(() => {
-    if (urlParams.guild) {
-      makeRequest(ApiConfig.guilds.get(urlParams.guild), 'GET').then((r) => setGuild(r));
-    }
-  }, [urlParams]);
+    if (urlParams.guild) makeRequest(ApiConfig.guilds.get(urlParams.guild), 'GET').then((r) => setGuild(r));
+  }, [urlParams.guild]);
 
   return (
     <div className="max-h-screen min-h-screen max-w-max w-full app-content">
-      <ServerSide guildMembers={userInfo.members}/>
+      <>
+        <ServerSide members={userInfo.members}/>
+      </>
       <div className="baseGuild">
-        <div className="bg-dark-200 section-direct-message-container">
-          <div className="bg-dark-200 overflow-hidden h-12 server-name-container">
-            <div className={'server-name-content text-white'}>
+        {
+          guild && <>
+            <>
+              <ChannelSideLayout guild={guild} {...props}/>
+            </>
+
+            <div className="w-full section-chat-content">
               {
-                (props.view === 'guild' && guild) ? <HeaderGuildName name={guild.name}/> : <HeaderDM/>
+                    (props.view === 'guild' && guild && guild.channels) ?
+                      <ChatLayout guild={guild}/> : null
               }
             </div>
-          </div>
-          <>
-            {
-              (props.view === 'guild' && guild && guild.channels) ?
-                <ChannelSide channels={guild.channels}/> : <UserFriendsSide/>
-            }
           </>
-          <div className="overflow-hidden user-info-cotnainer">
-            <UserInformation/>
-          </div>
-        </div>
-        <div className="w-full section-chat-content">
-          {
-            (props.view === 'guild' && guild && guild.channels) ?
-              <Chat guild={guild}/> : null
-          }
-        </div>
+        }
       </div>
     </div>
   );

@@ -1,17 +1,12 @@
 import React, {FC} from 'react';
-import {HomeIcon} from '@components/style/Icons/HomeIcon';
-import {PlusIcon} from '@components/style/Icons/PlusIcon';
 import {useNavigate} from 'react-router-dom';
-import {GuildMember} from '@app/Type/Guild/GuildMember';
 import {routesConfig} from '@app/config/routesConfig';
 import {useParams} from 'react-router';
-import {GuildRouter} from '@app/Type/Router/GuildRouter';
-import {ChannelType} from '@app/Type/Channel/Channel';
-
-interface ServerButtonProps extends Partial<GuildMember> {
-  type: 'HOME' | 'SERVER' | 'ADD';
-  name: string;
-}
+import {GuildRouter} from '@app/type/Router/GuildRouter';
+import {ChannelType} from '@app/type/Channel/ChannelType';
+import {HomeIcon} from '@components/style/icon/HomeIcon';
+import {PlusIcon} from '@components/style/icon/PlusIcon';
+import {ServerButtonProps} from '@app/type/Props/ServerButtonProps';
 
 export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) => {
   const location = useNavigate();
@@ -41,7 +36,7 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
       location(
           routesConfig.app.chat
               .replace(':guild', props.guild.id)
-              .replace(':channel', (firstTextChannel && firstTextChannel[0]) ? firstTextChannel[0].id: '0' ),
+              .replace(':channel', (firstTextChannel && firstTextChannel[0]) ? firstTextChannel[0].id : '0'),
       );
     }
   };
@@ -52,9 +47,9 @@ export const ServerButton: FC<ServerButtonProps> = (props: ServerButtonProps) =>
       <button onClick={onClick} onMouseEnter={tooltip}
         className="flex justify-center items-center h-full w-full overflow-hidden">
         {
-          props.type !== 'SERVER' ? <div className="mr-0.5">
-            {props.type === 'HOME' ? <HomeIcon/> : <PlusIcon/>}
-          </div> : <div>{props.name.split(/ +/g).map((item) => item.substring(0, 1)).join('')}</div>
+         !props.guild ? <div className="mr-0.5">
+           {props.type === 'HOME' ? <HomeIcon/> : <PlusIcon/>}
+         </div> : <div>{props.guild.name.split(/ +/g).map((item) => item.substring(0, 1)).join('')}</div>
         }
       </button>
     </div>

@@ -132,9 +132,12 @@ body {
   z-index: 5 !important;
   min-width: 240px !important;
   height: 100% !important;
+  max-height: 100vh !important;
   max-width: 240px !important;
   box-shadow: 3px 0 3px -3px rgba(#000000, .5) !important;
   overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .channel {
@@ -163,8 +166,10 @@ body {
 }
 
 .channel-section-container {
-  height: 100%;
-  max-height: calc(100% - 100px);
+  flex: 1;
+  max-height: 100%;
+  //height: 100%;
+  //max-height: calc(100% - 100px);
   overflow: auto;
   .channel-container {
     margin: 2px 0;
@@ -227,10 +232,12 @@ body {
 }
 
 .section-chat-content {
-  width: 100%;
-  height: 100%;
+  //width: 100%;
+  //height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100% !important;
+  max-height: 100vh !important;
 }
 
 .section-chat-messages {
@@ -239,10 +246,18 @@ body {
   //padding-right: 15px;
   //padding-left: 15px;
   //padding-bottom: 20px;
-  height: 100%;
-  display: flex;
+
+
+  //height: 100%;
+  //display: flex;
+  //flex-direction: column;
+  //overflow: auto;
+  //max-height: 100%;
+
+  flex: 1;
   flex-direction: column;
   overflow: auto;
+  display: flex;
   max-height: 100%;
 
   &::-webkit-scrollbar {
@@ -271,7 +286,7 @@ body {
   }
 
   .section-chat-channel-info-container {
-    padding: 1rem 1.25rem .25rem;
+    padding: 1rem 0 .25rem;
     margin-top: auto;
     .section-chat-channel-info-icon {
       width: 64px;
@@ -288,8 +303,11 @@ body {
       }
     }
 
+    .gpasdidéd {
+      padding: .25rem 1.25rem;
+    }
+
     .section-chat-channel-info-content {
-      margin-top: 1rem;
       font-family: "Whitney Book Regular", sans-serif;
 
       .channel-name {
@@ -298,26 +316,25 @@ body {
 
       .section-chat-channel-info-title {
         font-family: "Whitney Bold", sans-serif;
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: bold;
       }
       .section-chat-channel-info-subtitle {
-        margin-top: 1rem;
+        font-size: 14px;
         opacity: .7;
       }
     }
   }
 
   .message-wrapper-container {
-    margin-top: 1rem;
     word-break: break-all;
     transition: all .1s ease;
     position: relative;
     display: flex;
     user-select: auto;
     font-family: "Whitney Book Regular", sans-serif;
-    padding: .25rem 1.25rem;
-    margin-right: 10px;
+    //padding: .25rem 0 .25rem 1.25rem;
+    //margin-right: 10px;
 
     &:hover {
       .message-params-container {
@@ -393,20 +410,21 @@ body {
 
     .message-author-avatar-container {
       min-width: 48px;
-      height: 48px;
       max-width: 48px;
       max-height: 48px;
       overflow: hidden;
       border-radius: 15px;
-      background: lighten($dark-200, 5%);
 
       .avatar {
         width: 100%;
         height: 100%;
+        background: lighten($dark-200, 5%);
       }
     }
 
     .message-content-container {
+      //padding: 0 1.25rem 0 0;
+      margin-right: 10px;
       margin-left: .5rem;
       display: flex;
       flex-direction: column;
@@ -426,14 +444,13 @@ body {
     }
 
     .message-info-container {
-      margin-bottom: .3rem;
       display: flex;
       margin-top: 2px;
       align-items: center;
 
       .message-info-author-name {
         font-family: "Whitney Medium", sans-serif;
-        font-size: 1rem;
+        font-size: 15px;
 
         &:hover {
           cursor: pointer;
@@ -451,17 +468,18 @@ body {
     }
 
     .message-wrapper-content {
-      margin-bottom: 2px;
+      padding-bottom: 2px;
+      padding-top: 2px;
       font-family: "Whitney Light Regular", sans-serif;
-      font-size: 1rem;
-      line-height: 1.2rem;
+      font-size: 14px;
+      //line-height: 1.2rem;
     }
   }
 }
 
 
 .input-message-container {
-  padding-bottom: 1.5rem;
+  padding-bottom: 1.1rem;
   padding-left: 1.1rem;
   padding-right: 1.1rem;
 
@@ -527,6 +545,5 @@ body {
 .user-info-cotnainer {
   display: flex;
   align-items: center;
-  height: 35px;
   box-shadow: 0 0 3px rgba(#000000, .5);
 }

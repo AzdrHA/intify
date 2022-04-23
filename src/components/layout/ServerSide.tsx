@@ -1,11 +1,7 @@
 import React, {FC} from 'react';
-import {ServerButton} from '@components/ServerButton/ServerButton';
-import {GuildMember} from '@app/Type/Guild/GuildMember';
+import {ServerButton} from '@components/style/button/ServerButton';
 import {Divider} from '@components/style/divider';
-
-type ServerSideProps = {
-  guildMembers: GuildMember[] | undefined
-}
+import {ServerSideProps} from '@app/type/Props/ServerSideProps';
 
 export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
   return (
@@ -14,11 +10,11 @@ export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
         <ServerButton name={'Home'} type={'HOME'}/>
 
         {
-          props.guildMembers ? <Divider/> : null
+          props.members ? <Divider/> : null
         }
 
         {
-          props.guildMembers && props.guildMembers.map((guild, i) => {
+          props.members && props.members.map((guild, i) => {
             return (
               <ServerButton {...guild} type={'SERVER'} key={i}/>
             );
