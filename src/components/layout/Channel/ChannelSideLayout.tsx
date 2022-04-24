@@ -26,6 +26,7 @@ export const ChannelSideLayout: FC<Yolo> = (props: Yolo) => {
           (props.view === 'guild' && props.guild && props.guild.channels) ?
             <ChannelsListLayout channels={props.guild.channels}/> : <UserFriendsSide/>
         }
+        {}
       </>
       <div className="overflow-hidden h-12 user-info-cotnainer">
         <UserInformation/>

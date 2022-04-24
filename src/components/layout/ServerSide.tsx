@@ -10,7 +10,7 @@ export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
         <ServerButton name={'Home'} type={'HOME'}/>
 
         {
-          props.members ? <Divider/> : null
+          props.members ? <Divider extraClass={'w-6/12 h-0.5 my-1 mx-auto'}/> : null
         }
 
         {
@@ -21,7 +21,7 @@ export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
           })
         }
 
-        <Divider/>
+        <Divider extraClass={'w-6/12 h-0.5 my-1 mx-auto '}/>
 
         <ServerButton name={'Add server'} type={'ADD'}/>
       </div>

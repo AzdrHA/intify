@@ -25,12 +25,11 @@ export const Application: FC<ApplicationProps> = (props: ApplicationProps) => {
         <ServerSide members={userInfo.members}/>
       </>
       <div className="baseGuild">
+        <>
+          <ChannelSideLayout guild={guild} {...props}/>
+        </>
         {
           guild && <>
-            <>
-              <ChannelSideLayout guild={guild} {...props}/>
-            </>
-
             <div className="w-full section-chat-content">
               {
                     (props.view === 'guild' && guild && guild.channels) ?

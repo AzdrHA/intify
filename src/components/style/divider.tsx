@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-export const Divider = () => {
+type DividerProps = {
+  extraClass: string;
+}
+export const Divider: FC<DividerProps> = (props: DividerProps) => {
   return (
-    <div className="w-6/12 h-0.5 my-1 mx-auto rounded bg-white opacity-20"/>
+    <div className={`${props.extraClass} rounded bg-white opacity-20`}/>
   );
 };

@@ -3,7 +3,8 @@ export const ApiConfig = {
     login: '/auth/login',
   },
   users: {
-    account: '/users/account',
+    account: '/users/@me/account',
+    privateMessage: '/users/@me/channels',
   },
   guilds: {
     get: (guild: string) => {

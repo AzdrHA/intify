@@ -3,6 +3,10 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    fontSize: {
+      'xs': '.75rem',
+      'tiny': '.875rem',
+    },
     colors: {
       'primary': '#8290C4FF',
       'dark': '#292929',

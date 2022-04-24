@@ -243,7 +243,6 @@ body {
 .section-chat-messages {
   //padding: .25rem 1.25rem;
   position: relative;
-  //padding-right: 15px;
   //padding-left: 15px;
   //padding-bottom: 20px;
 
@@ -262,15 +261,17 @@ body {
 
   &::-webkit-scrollbar {
     padding: 10px;
-    width: 8px;
-    height: 8px;
+    width: 4px;
+    height: 4px;
     background-color: darken($dark-200, 4); /* or add it to the track */
     border-radius: 5px;
+    opacity: .2;
   }
 
   &::-webkit-scrollbar-thumb {
+    opacity: .2;
     width: 2px;
-    background: darken($dark-200, 10);
+    background: darken($primary, 4);
     border-radius: 5px;
   }
 
@@ -479,33 +480,37 @@ body {
 
 
 .input-message-container {
-  padding-bottom: 1.1rem;
-  padding-left: 1.1rem;
-  padding-right: 1.1rem;
+
+  .container-message-attachment {
+    padding: 5px 15px;
+    background: lighten($dark-200, 5%);
+    display: flex;
+    align-items: center;
+  }
 
   .input-message-content {
-    border-radius: 10px;
     background: lighten($dark-200, 5%);
     display: flex;
     align-items: center;
 
     .input-message-send-files {
-      margin: 0 1rem;
+      position: relative;
+      margin: auto 15px;
       cursor: pointer;
       width: 20px;
       height: 20px;
       background: lighten($dark-200, 50%);
-      border-radius: 50%;
+      border-radius: 145949454px;
       border: none;
       display: flex;
       justify-content: center;
       align-items: center;
 
       .icon-svg {
-        width: 12px;
-        height: 12px;
-        margin-top: 1.9px;
-        margin-left: 1.8px;
+        width: 60px;
+        height: 10px;
+        margin-top: 1px;
+        margin-left: 1.5px;
         min-width: 12px !important;
         min-height: 12px !important;
         color: black;
@@ -514,7 +519,7 @@ body {
 
     .input-message {
       font-size: 14px;
-      padding: 10px;
+      padding: 10px 10px 10px 0;
       background: none;
       position: relative;
       overflow-x: hidden;
@@ -524,7 +529,7 @@ body {
       overflow-y: auto;
       max-height: 50vh;
       outline: none;
-      width: 100%;
+      //width: 100%;
       color: white;
       font-family: "Whitney Light Regular", sans-serif;
       -moz-user-modify: read-write;

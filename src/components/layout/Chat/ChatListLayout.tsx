@@ -26,7 +26,8 @@ export const ChatListLayout: FC<ChatListLayout> = (props: ChatListLayout) => {
 
               <div className={'message-author-avatar-container'}>
                 {!lastMsgSeparation &&
-                    <div className="avatar"/>
+                    <div className="avatar">
+                    </div>
                 }
               </div>
 
