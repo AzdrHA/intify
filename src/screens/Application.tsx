@@ -9,6 +9,7 @@ import {GuildRouter} from '@app/type/Router/GuildRouter';
 import {Guild} from '@app/type/Guild/Guild';
 import {ChannelSideLayout} from '@components/layout/Channel/ChannelSideLayout';
 import {ChatLayout} from '@components/layout/Chat/ChatLayout';
+import {ServerCreateModal} from '@components/modal/ServerCreateModal';
 
 export const Application: FC<ApplicationProps> = (props: ApplicationProps) => {
   const userInfo = useAppSelector((state) => state.user);

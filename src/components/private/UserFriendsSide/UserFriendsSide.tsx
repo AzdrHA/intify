@@ -4,7 +4,7 @@ import {ApiConfig} from '@app/config/apiConfig';
 
 export const UserFriendsSide = () => {
   useEffect(() => {
-    makeRequest(ApiConfig.users.privateMessage, 'GET').then((r) => console.log(r));
+    // makeRequest(ApiConfig.users.privateMessage, 'GET').then((r) => console.log(r));
   }, []);
 
   return (

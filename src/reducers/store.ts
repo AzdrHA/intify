@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
-import UserAction from '@app/actions/UserAction';
+import {userSlice} from '@components/slice/UserSlice';
+import {guildMember} from '@components/slice/GuildMemberSlice';
 
 export const store = configureStore({
   reducer: {
-    user: UserAction,
+    user: userSlice.reducer,
+    guildMember: guildMember.reducer,
   },
 });
 

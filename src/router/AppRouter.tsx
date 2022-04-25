@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {makeRequest} from '@app/api/makeRequest';
-import {ApiConfig} from '@app/config/apiConfig';
-import {useAppDispatch, useAppSelector} from '@app/reducers/hook';
 import {Route, Routes} from 'react-router-dom';
 import {routesConfig} from '@app/config/routesConfig';
 import {Application} from '@screens/Application';
 import {Loading} from '@components/style/loading/Loading';
+import {useDispatch} from 'react-redux';
+import {userSlice} from '@components/slice/UserSlice';
+import {userAccountRequest} from '@app/api/userRequest';
+import {guildMember} from '@components/slice/GuildMemberSlice';
 
 export const AppRouter = () => {
-  const userInfo = useAppSelector((state) => state.user);
   const [isLoad, setLoad] = useState(false);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userInfo) {
-      makeRequest(ApiConfig.users.account, 'GET').then((user) => {
-        dispatch({type: 'ADD_USER_ACTION', payload: user});
-        setLoad(true);
-      });
-    }
+    userAccountRequest().then((user) => {
+      dispatch(userSlice.actions.increment(user));
+      dispatch(guildMember.actions.setDefault(user.members));
+      setLoad(true);
+    });
   }, []);
 
   return !isLoad ? <Loading/> : <Routes>

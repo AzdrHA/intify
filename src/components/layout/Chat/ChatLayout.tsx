@@ -1,6 +1,5 @@
 import React, {ChangeEventHandler, FC, useEffect, useRef, useState} from 'react';
-import {HeaderGuildChat} from '@components/Guild/HeaderGuildChat/HeaderGuildChat';
-import {generatePath, useParams} from 'react-router';
+import {useParams} from 'react-router';
 import {ChatDefaultMessageLayout} from '@components/layout/Chat/ChatDefaultMessageLayout';
 import {UtilsStr} from '@app/utils/UtilsStr';
 import {makeRequest} from '@app/api/makeRequest';
@@ -19,9 +18,8 @@ import {
 } from '@app/mercure/subscription/messageSubscription';
 import {ChatUserTyping} from '@components/partial/Chat/ChatUserTyping';
 import {Divider} from '@components/style/divider';
-import axios from 'axios';
-import {mercureConfig} from '@app/mercure/MercureConfig';
 import {objectToFormData} from '@app/utils/miscellaneous';
+import {HeaderGuildChat} from '@components/guild/HeaderGuildChat/HeaderGuildChat';
 
 export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
   const urlParams = useParams<GuildRouter>();

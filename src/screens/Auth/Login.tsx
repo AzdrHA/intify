@@ -1,26 +1,24 @@
 import React from 'react';
 import {Form, Field} from 'react-final-form';
-import {makeRequest} from '@app/api/makeRequest';
-import {ApiConfig} from '@app/config/apiConfig';
-import {LoginRes} from '@app/type/Auth/LoginRes';
 import Cookies from 'js-cookie';
 import {useAppDispatch} from '@app/reducers/hook';
 import {useNavigate} from 'react-router-dom';
 import {UserActionType} from '@app/actions/UserAction';
+import {userLoginRequest} from '@app/api/userRequest';
+import {UserLoginRequest} from '@app/type/Api/UserRequest';
+import {GuildMemberActionType} from '@app/actions/GuildMemberAction';
 
 export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const submitLoginForm = (data: { email: string, password: string }) => {
-    makeRequest(ApiConfig.auth.login, 'POST', {
-      'email': data.email,
-      'password': data.password,
-    }, false).then((user: LoginRes) => {
+  const submitLoginForm = (data: UserLoginRequest) => {
+    userLoginRequest(data).then((user) => {
       Cookies.set('token', user.token, {
         expires: 1,
       });
-      dispatch({type: UserActionType.ADD_USER_ACTION, payload: user});
+      // dispatch({type: UserActionType.ADD_USER_ACTION, payload: user});
+      // dispatch({type: GuildMemberActionType.ADD_GUILD_ACTION, payload: user.members});
       navigate('/@me');
     });
   };

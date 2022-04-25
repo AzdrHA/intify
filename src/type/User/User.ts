@@ -5,10 +5,12 @@ import {Image} from '@app/type/Image';
 export type User = {
   id: string;
   username: string;
+  email: string;
   token: string;
   status?: UserStatus | null;
-  members: GuildMember[] | undefined;
+  members?: GuildMember[] | undefined;
   image?: Image | null;
   updateAt?: Date | null;
   createdAt?: Date | null;
+  password: string;
 }

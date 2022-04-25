@@ -1,5 +1,6 @@
 import axios, {Method} from 'axios';
 import Cookies from 'js-cookie';
+import {ApiConfig} from '@app/config/apiConfig';
 
 export const makeRequest = (url: string, method: Method, data: any = {}, withAuth: boolean = true, isFile = false): Promise<any> => {
   const headers = {
@@ -8,9 +9,9 @@ export const makeRequest = (url: string, method: Method, data: any = {}, withAut
     'Accept': 'application/json',
   };
 
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve) =>
     axios({
-      baseURL: 'http://localhost:86/api/v1',
+      baseURL: ApiConfig.basePath,
       method,
       url,
       data,

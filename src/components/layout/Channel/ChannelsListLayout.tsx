@@ -44,28 +44,26 @@ export const ChannelsListLayout: FC<ChannelSideProps> = (props: ChannelSideProps
   };
 
   return (
-    <div className={'mx-2 my-2 channel-section-container'}>
-      <div className={'channel-section-content'}>
-        {
-          props.channels.map((channel, i) => {
-            return <div
-              onClick={() => channelClick(channel, channelRef.current[i])}
-              className={`channel-container ${ChannelType[channel.type]}`}
-              key={i}
-              ref={(ref) => channelRef.current[i] = ref as HTMLDivElement}>
-              <div className={`channel ${ChannelType[channel.type]}`}>
-                {
-                  channel.type === ChannelType.GUILD_TEXT ? <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ?
-                    <SpeakerIcon/> : null
-                }
-                <div className={channel.type === ChannelType.GUILD_CATEGORY ? 'channel-name category' : 'channel-name'}>
-                  {UtilsStr.formatToChannelName(channel.name)}
-                </div>
+    <>
+      {
+        props.channels.map((channel, i) => {
+          return <div
+            onClick={() => channelClick(channel, channelRef.current[i])}
+            className={`channel-container ${ChannelType[channel.type]}`}
+            key={i}
+            ref={(ref) => channelRef.current[i] = ref as HTMLDivElement}>
+            <div className={`channel ${ChannelType[channel.type]}`}>
+              {
+                channel.type === ChannelType.GUILD_TEXT ? <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ?
+                  <SpeakerIcon/> : null
+              }
+              <div className={channel.type === ChannelType.GUILD_CATEGORY ? 'channel-name category' : 'channel-name'}>
+                {UtilsStr.formatToChannelName(channel.name)}
               </div>
-            </div>;
-          })
-        }
-      </div>
-    </div>
+            </div>
+          </div>;
+        })
+      }
+    </>
   );
 };

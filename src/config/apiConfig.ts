@@ -1,4 +1,5 @@
 export const ApiConfig = {
+  basePath: 'http://localhost:86/api/v1',
   auth: {
     login: '/auth/login',
   },
@@ -9,6 +10,10 @@ export const ApiConfig = {
   guilds: {
     get: (guild: string) => {
       return `/guilds/${guild}`;
+    },
+    create: '/guilds',
+    channel: {
+      create: '/guilds/:guild/channels',
     },
   },
   messages: (channel: string) => {

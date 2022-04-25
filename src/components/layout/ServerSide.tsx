@@ -2,16 +2,19 @@ import React, {FC, useEffect, useRef} from 'react';
 import ServerButton from '@components/style/button/ServerButton';
 import {Divider} from '@components/style/divider';
 import {ServerSideProps} from '@app/type/Props/ServerSideProps';
+import {useSelector} from 'react-redux';
+import {RootState} from '@app/reducers/store';
 
 export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
   const serverRef = useRef<HTMLDivElement[]>([]);
+  const guildMember = useSelector((state: RootState) => state.guildMember);
 
   useEffect(() => {
     serverRef.current[0].classList.add('active');
   }, []);
 
   const onClick = (index: number) => {
-    serverRef.current.map((div, i) => {
+    serverRef.current.map((div) => {
       if (div.classList.contains('active')) {
         div.classList.remove('active');
       }
@@ -31,11 +34,11 @@ export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
         />
 
         {
-          props.members ? <Divider extraClass={'w-5/12 h-0.5 my-1 mx-auto'}/> : null
+          guildMember.length ? <Divider extraClass={'w-5/12 h-0.5 my-1 mx-auto'}/> : null
         }
 
         {
-          props.members && props.members.map((guild, i) => {
+          guildMember.map((guild, i) => {
             return (
               <ServerButton
                 ref={(ref) => serverRef.current[i+1] = ref as HTMLDivElement}
@@ -52,11 +55,11 @@ export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
         <Divider extraClass={'w-5/12 h-0.5 my-1 mx-auto'}/>
 
         <ServerButton
-          ref={(ref) => serverRef.current[props.members ? props.members.length+1 : 1] = ref as HTMLDivElement}
+          ref={(ref) => serverRef.current[guildMember.length+1] = ref as HTMLDivElement}
           name={'Add server'}
           type={'ADD'}
           onClick={onClick}
-          index={props.members ? props.members.length+1 : 1}
+          index={guildMember.length+1}
         />
       </div>
     </div>
