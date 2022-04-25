@@ -21,7 +21,7 @@
   line-height: 18px;
   max-width: 200px;
   position: absolute;
-  background: $dark-100;
+  background: #000000;
   border-radius: 5px;
   color: $primary;
   font-size: 14px;
@@ -39,7 +39,7 @@
     left: 0px;
     width: 12px;
     height: 12px;
-    background: $dark-100;
+    background: #000000;
     top: calc(50% - 1px);
 
     transform: rotate(45deg) translate(-50%);
@@ -54,12 +54,48 @@ body {
   border-radius: 50%;
 }
 
-.testTransition {
+.testTransition, .server-button-container {
+  position: relative;
   transition: all .2s ease;
+}
+
+.server-button-container {
+  &:before {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: height .1s linear;
+    transform: translate(0, -50%);
+    top: 50%;
+    content: '';
+    position: absolute;
+    height: 0;
+    width: 3px;
+    background: $primary;
+  }
+
+  &.active {
+    &:before {
+      height: 100%;
+    }
+
+    .testTransition {
+      @apply rounded;
+      @apply bg-primary;
+      @apply text-white;
+
+      .icon-svg {
+        color: #ffffff;
+      }
+    }
+  }
 
   &:hover {
     .icon-svg {
       color: #ffffff;
+    }
+
+    &:before {
+      height: 50%;
     }
   }
 }

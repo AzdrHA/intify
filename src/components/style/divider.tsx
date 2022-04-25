@@ -5,6 +5,6 @@ type DividerProps = {
 }
 export const Divider: FC<DividerProps> = (props: DividerProps) => {
   return (
-    <div className={`${props.extraClass} rounded bg-white opacity-20`}/>
+    <div className={`${props.extraClass} rounded bg-white opacity-10`}/>
   );
 };

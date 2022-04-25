@@ -1,29 +1,63 @@
-import React, {FC} from 'react';
-import {ServerButton} from '@components/style/button/ServerButton';
+import React, {FC, useEffect, useRef} from 'react';
+import ServerButton from '@components/style/button/ServerButton';
 import {Divider} from '@components/style/divider';
 import {ServerSideProps} from '@app/type/Props/ServerSideProps';
 
 export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
+  const serverRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    serverRef.current[0].classList.add('active');
+  }, []);
+
+  const onClick = (index: number) => {
+    serverRef.current.map((div, i) => {
+      if (div.classList.contains('active')) {
+        div.classList.remove('active');
+      }
+    });
+    serverRef.current[index].classList.add('active');
+  };
+
   return (
     <div className="bg-dark-100 section-server-container">
       <div className="py-1.5">
-        <ServerButton name={'Home'} type={'HOME'}/>
+        <ServerButton
+          ref={(ref) => serverRef.current[0] = ref as HTMLDivElement}
+          name={'Home'}
+          type={'HOME'}
+          onClick={onClick}
+          index={0}
+        />
 
         {
-          props.members ? <Divider extraClass={'w-6/12 h-0.5 my-1 mx-auto'}/> : null
+          props.members ? <Divider extraClass={'w-5/12 h-0.5 my-1 mx-auto'}/> : null
         }
 
         {
           props.members && props.members.map((guild, i) => {
             return (
-              <ServerButton {...guild} type={'SERVER'} key={i}/>
+              <ServerButton
+                ref={(ref) => serverRef.current[i+1] = ref as HTMLDivElement}
+                {...guild}
+                type={'SERVER'}
+                key={i}
+                index={i+1}
+                onClick={onClick}
+              />
             );
           })
         }
 
-        <Divider extraClass={'w-6/12 h-0.5 my-1 mx-auto '}/>
+        <Divider extraClass={'w-5/12 h-0.5 my-1 mx-auto'}/>
 
-        <ServerButton name={'Add server'} type={'ADD'}/>
+        <ServerButton
+          ref={(ref) => serverRef.current[props.members ? props.members.length+1 : 1] = ref as HTMLDivElement}
+          name={'Add server'}
+          type={'ADD'}
+          onClick={onClick}
+          index={props.members ? props.members.length+1 : 1}
+        />
       </div>
     </div>
   );
