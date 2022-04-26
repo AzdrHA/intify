@@ -36,7 +36,7 @@ const ServerButton: ForwardRefRenderFunction<HTMLDivElement, ServerButtonProps> 
     props.onClick(props.index);
     if (props.type === 'HOME') return location('/@me');
     if (props.type === 'SERVER' && (props.guild && (urlParams.guild !== props.guild.id.toString()))) {
-      const firstTextChannel = props.guild.channels?.filter((channel) => channel.type === ChannelType.GUILD_TEXT);
+      const firstTextChannel = props.guild.channels.filter((channel) => channel.type === ChannelType.GUILD_TEXT);
       location(generatePath(routesConfig.app.chat, {guild: props.guild.id, channel: firstTextChannel[0].id}));
     }
   };

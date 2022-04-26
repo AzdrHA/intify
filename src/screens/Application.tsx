@@ -18,12 +18,12 @@ export const Application: FC<ApplicationProps> = (props: ApplicationProps) => {
 
   useEffect(() => {
     if (urlParams.guild) makeRequest(ApiConfig.guilds.get(urlParams.guild), 'GET').then((r) => setGuild(r));
-  }, [urlParams.guild]);
+  }, [urlParams.guild, urlParams.channel]);
 
   return (
     <div className="max-h-screen min-h-screen max-w-max w-full app-content">
       <>
-        <ServerSide members={userInfo.members}/>
+        <ServerSide/>
       </>
       <div className="baseGuild">
         <>

@@ -11,7 +11,10 @@ export const mercureConfig = {
       stop_typing: 'channels/:id/messages/stop/typing',
     },
     guilds: {
-      create_guild: '/guilds/:user',
+      create_guild: 'guilds/create/users/:user',
+      channel: {
+        create_channel: 'guilds/:guild/channel/create',
+      },
     },
   },
 };

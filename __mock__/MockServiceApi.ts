@@ -1,7 +1,8 @@
 import {faker} from '@faker-js/faker';
-import {Channel, ChannelType} from '@app/type/Channel/Channel';
+import {Channel} from '@app/type/Channel/Channel';
 import {User} from '@app/type/User/User';
 import {Guild} from '@app/type/Guild/Guild';
+import {ChannelType} from '@app/type/Channel/ChannelType';
 
 /**
  * @param {number} min default 600
@@ -61,6 +62,8 @@ export const mockAccount = (): Promise<User> => {
   }
   return promise({
     id: '456456468465156186',
+    email: 'email',
+    password: 'password',
     username: 'Azdra',
     token: 'gGhgd454Ggdeisbb478fghgd13297Ypbf91f',
     status: null,

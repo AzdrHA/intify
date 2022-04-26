@@ -3,8 +3,8 @@ import {GuildMember} from '@app/type/Guild/GuildMember';
 
 const initialState: GuildMember[] | undefined = [];
 
-export const guildMember = createSlice({
-  name: 'guildMember',
+export const guildMemberSlice = createSlice({
+  name: 'guildMemberSlice',
   initialState,
   reducers: {
     setDefault: (state, action: PayloadAction<GuildMember[] | undefined>) => {
@@ -16,5 +16,5 @@ export const guildMember = createSlice({
   },
 });
 
-export default guildMember.reducer;
+export default guildMemberSlice.reducer;
 

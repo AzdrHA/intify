@@ -1,16 +1,23 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import ServerButton from '@components/style/button/ServerButton';
 import {Divider} from '@components/style/divider';
-import {ServerSideProps} from '@app/type/Props/ServerSideProps';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '@app/reducers/store';
+import {createGuildSubscription} from '@app/mercure/subscription/Guild/guildSubscription';
+import {guildMemberSlice} from '@components/slice/GuildMemberSlice';
 
-export const ServerSide: FC<ServerSideProps> = (props: ServerSideProps) => {
+export const ServerSide = () => {
   const serverRef = useRef<HTMLDivElement[]>([]);
-  const guildMember = useSelector((state: RootState) => state.guildMember);
+  const guildMember = useSelector((state: RootState) => state.guildMemberSlice);
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     serverRef.current[0].classList.add('active');
+
+    createGuildSubscription(user.id as string, (e) => {
+      dispatch(guildMemberSlice.actions.setDefault(e));
+    });
   }, []);
 
   const onClick = (index: number) => {
