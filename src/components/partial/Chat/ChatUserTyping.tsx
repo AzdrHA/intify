@@ -18,7 +18,7 @@ export const ChatUserTyping: FC<ChatUserTypingProps> = (props: ChatUserTypingPro
                       if (v.id !== userInfo.id) {
                         return <div key={i} className={'inline'}>
                           <strong
-                            key={i}>{v.name}</strong> {i === 0 || i < props.usersTyping.length - 1 ? <>and </> : null}
+                            key={i}>{v.name}</strong> {(i !== props.usersTyping.length - 1) ? <>and </> : null}
                         </div>;
                       }
                     })

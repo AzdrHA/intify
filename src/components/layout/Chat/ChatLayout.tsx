@@ -1,5 +1,5 @@
 import React, {ChangeEventHandler, FC, useEffect, useRef, useState} from 'react';
-import {useParams} from 'react-router';
+import {generatePath, useParams} from 'react-router';
 import {ChatDefaultMessageLayout} from '@components/layout/Chat/ChatDefaultMessageLayout';
 import {UtilsStr} from '@app/utils/UtilsStr';
 import {makeRequest} from '@app/api/makeRequest';
@@ -20,14 +20,20 @@ import {ChatUserTyping} from '@components/partial/Chat/ChatUserTyping';
 import {Divider} from '@components/style/divider';
 import {objectToFormData} from '@app/utils/miscellaneous';
 import {HeaderGuildChat} from '@components/guild/HeaderGuildChat/HeaderGuildChat';
+import {startTypingMessagePublication, stopTypingMessagePublication} from '@app/mercure/publication/messagePublication';
+import {useAppSelector} from '@app/reducers/hook';
+import {imageFormat} from '@app/utils/imageFormat';
+import {FancyBoxModal} from '@components/modal/FancyBoxModal';
 
 export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
+  const userInfo = useAppSelector((state) => state.user);
   const urlParams = useParams<GuildRouter>();
   const [messages, setMessages] = useState<Message[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [file, setFile] = useState<File|null>(null);
   const [writeTimeOut, setWriteTimeOut] = useState<any>();
   const [usersTyping, setUsersTyping] = useState<UserTypingState[]>([]);
+  const [fancyBoxModalActive, setFancyBoxModalActive] = useState(null);
 
   const firstChannel = props.guild.channels.find((channel) => channel.id == urlParams.channel);
 
@@ -44,9 +50,7 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
       setMessages(r);
       scroll();
     });
-  }, [urlParams.channel]);
 
-  useEffect(() => {
     if (urlParams.channel) {
       createMessageSubscription(urlParams.channel, (e) => {
         setMessages((messages) => [...messages, JSON.parse(e.data)]);
@@ -54,19 +58,24 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
       });
 
       startTypingMessageSubscription(urlParams.channel, (e) => {
-        setUsersTyping((user) => [...user, JSON.parse(e.data)]);
-        console.log([...usersTyping, JSON.parse(e.data)]);
+        if (JSON.parse(e.data)['id'] !== userInfo.id) {
+          setUsersTyping((user) => [...user, JSON.parse(e.data)]);
+        }
         console.log('startTypingMessageSubscription', e);
       });
 
       stopTypingMessageSubscription(urlParams.channel, (e) => {
         console.log('stopTypingMessageSubscription', e);
-        const array = [...usersTyping]; // make a separate copy of the array
-        array.splice(2, 1);
-        setUsersTyping(array);
+        /* const array = [...usersTyping]; // make a separate copy of the array
+        array.splice(2, 1);*/
+        setUsersTyping([]);
       });
     }
-  }, []);
+  }, [urlParams.channel]);
+
+  const imageLoad: React.ChangeEventHandler<HTMLImageElement> = (e) => {
+    imageFormat(e.currentTarget);
+  };
 
   const fileOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files) {
@@ -75,9 +84,6 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
   };
 
   const sendMessage = (message: string) => {
-    /* makeRequest(ApiConfig.messages(String(urlParams.channel)), 'POST', {
-      content: message,
-    });*/
     makeRequest(ApiConfig.messages(String(urlParams.channel)), 'POST', objectToFormData({
       content: message,
       file: file,
@@ -89,28 +95,21 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
     const value = e.currentTarget.innerText.trimStart().trim();
 
     clearTimeout(writeTimeOut);
-    if (!writeTimeOut) console.log('start typing');
+    if (!writeTimeOut) {
+      console.log('start typing');
 
-    /* axios.request({
-      method: 'POST',
-      url: 'http://127.0.0.1:1080/.well-known/mercure',
-      headers: {
-        'authorization': 'Bearer '+mercureConfig.token.publication,
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      data: {
-        'topic': generatePath(mercureConfig.routes.channels.start_typing, {id: urlParams.channel}),
-        'data': JSON.stringify({
-          '@id': 'http://localhost:1080/.well-known/mercure/ui/demo/books/1.jsonld',
-          'availability': 'https://schema.org/OutOfStock',
-        }),
-      },
-    }).then((r) => {
-      console.log(r);
-    });*/
+      if (urlParams.channel) {
+        startTypingMessagePublication(urlParams.channel, {'id': userInfo.id, 'name': userInfo.username}).then((r) => {
+        });
+      }
+    }
 
     setWriteTimeOut(setTimeout(() => {
       console.log('stop typing');
+      if (urlParams.channel) {
+        stopTypingMessagePublication(urlParams.channel, {'id': userInfo.id, 'name': userInfo.username}).then((r) => {
+        });
+      }
       setWriteTimeOut(null);
     }, 2000));
 
@@ -133,21 +132,26 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
             <ChatDefaultMessageLayout channel={firstChannel}/>
           </>
           <>
-            <ChatListLayout messages={messages}/>
+            {
+              fancyBoxModalActive ? <FancyBoxModal data={fancyBoxModalActive} toggleModal={setFancyBoxModalActive}/> : null
+            }
+            <ChatListLayout messages={messages} imageClick={setFancyBoxModalActive}/>
           </>
         </div>
       </div>
       {
         file ? <div className={'input-message-container px-4'}>
           <div className={'container-message-attachment rounded-t-lg'}>
-            <img src={URL.createObjectURL(file)} alt=""/>
+            <div>
+              <img onLoad={imageLoad} src={URL.createObjectURL(file)} alt=""/>
+            </div>
           </div>
           <Divider extraClass={'h-px'}/>
         </div> : null
       }
 
       <div className={usersTyping.length ? 'input-message-container px-4' : 'input-message-container px-4 pb-4'}>
-        <div className={file ? 'input-message-content h-full rounded-b-lg' : 'input-message-content h-full rounded-b-lg rounded-t-lg'}>
+        <div className={file ? 'input-message-content rounded-b-lg' : 'input-message-content rounded-b-lg rounded-t-lg'}>
           <FileUploadButton onChange={fileOnChange} accept={'image/*'}/>
           <DivContentEditable onKeyDown={keyDown}
             placeholder={`Message #${UtilsStr.formatToChannelName(firstChannel.name)}`}/>
