@@ -15,6 +15,9 @@ export const ApiConfig = {
     channel: {
       create: '/guilds/:guild/channels',
     },
+    invite: {
+      join: '/guilds/invites/:code',
+    },
   },
   messages: (channel: string) => {
     return `/channels/${channel}/messages`;

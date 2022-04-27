@@ -1,6 +1,6 @@
 import React from 'react';
-import {LoginForm} from '@components/form/Auth/LoginForm';
+import {LoginModal} from '@components/modal/LoginModal';
 
 export const Login = () => {
-  return <LoginForm/>;
+  return <LoginModal toggleModal={() => {}}/>;
 };

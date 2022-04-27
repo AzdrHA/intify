@@ -4,7 +4,7 @@ import {Divider} from '@components/style/divider';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '@app/reducers/store';
 import {createGuildSubscription} from '@app/mercure/subscription/Guild/guildSubscription';
-import {guildMemberSlice} from '@components/slice/GuildMemberSlice';
+import {guildMemberSlice} from '@app/slice/GuildMemberSlice';
 
 export const ServerSide = () => {
   const serverRef = useRef<HTMLDivElement[]>([]);
@@ -15,9 +15,9 @@ export const ServerSide = () => {
   useEffect(() => {
     serverRef.current[0].classList.add('active');
 
-    createGuildSubscription(user.id as string, (e) => {
+    /* createGuildSubscription(user.id as string, (e) => {
       dispatch(guildMemberSlice.actions.setDefault(e));
-    });
+    });*/
   }, []);
 
   const onClick = (index: number) => {

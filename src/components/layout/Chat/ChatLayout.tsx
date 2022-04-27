@@ -1,5 +1,5 @@
 import React, {ChangeEventHandler, FC, useEffect, useRef, useState} from 'react';
-import {generatePath, useParams} from 'react-router';
+import {useParams} from 'react-router';
 import {ChatDefaultMessageLayout} from '@components/layout/Chat/ChatDefaultMessageLayout';
 import {UtilsStr} from '@app/utils/UtilsStr';
 import {makeRequest} from '@app/api/makeRequest';
@@ -52,24 +52,24 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
     });
 
     if (urlParams.channel) {
-      createMessageSubscription(urlParams.channel, (e) => {
+      /* createMessageSubscription(urlParams.channel, (e) => {
         setMessages((messages) => [...messages, JSON.parse(e.data)]);
         scroll();
-      });
+      });*/
 
-      startTypingMessageSubscription(urlParams.channel, (e) => {
+      /* startTypingMessageSubscription(urlParams.channel, (e) => {
         if (JSON.parse(e.data)['id'] !== userInfo.id) {
           setUsersTyping((user) => [...user, JSON.parse(e.data)]);
         }
         console.log('startTypingMessageSubscription', e);
-      });
+      });*/
 
-      stopTypingMessageSubscription(urlParams.channel, (e) => {
+      /* stopTypingMessageSubscription(urlParams.channel, (e) => {
         console.log('stopTypingMessageSubscription', e);
-        /* const array = [...usersTyping]; // make a separate copy of the array
-        array.splice(2, 1);*/
+        // const array = [...usersTyping]; // make a separate copy of the array
+        // array.splice(2, 1);
         setUsersTyping([]);
-      });
+      });*/
     }
   }, [urlParams.channel]);
 

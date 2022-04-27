@@ -1,12 +1,13 @@
 import {Field, Form} from 'react-final-form';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {guildCreateRequest} from '@app/api/guildRequest';
 import {GuildCreateRequest} from '@app/type/Api/GuildRequest';
 import {useAppSelector} from '@app/reducers/hook';
 import {Input} from '@components/style/input/Input';
 
 type GuildCreateFormProps = {
-  toggleModal: Function
+  toggleModal: Function;
+  visibleJoinForm: Function
 }
 export const GuildCreateForm: FC<GuildCreateFormProps> = (props: GuildCreateFormProps) => {
   const userInfo = useAppSelector((state) => state.user);
@@ -39,9 +40,14 @@ export const GuildCreateForm: FC<GuildCreateFormProps> = (props: GuildCreateForm
               )}/>
             </div>
 
+            <div className={'p-3'}>
+              <h1 className={'text-center'}>Already have an invite.</h1>
+              <button onClick={() => props.visibleJoinForm(true)} type={'button'} className={'rounded bg-primary w-full py-1 mt-1'}>Join a Server</button>
+            </div>
+
             <div className={'flex justify-end bg-pink-500 py-3 px-3 form-base-bottom text-tiny'}>
-              <button onClick={() => props.toggleModal()} type="button">Cancel</button>
-              <button className={'rounded bg-primary py-2 px-3 ml-5'} type="submit">Create</button>
+              <button className={'rounded py-1'} onClick={() => props.toggleModal()} type="button">Cancel</button>
+              <button className={'rounded bg-primary py-1 px-3 ml-5'} type="submit">Create</button>
             </div>
           </form>
         </div>

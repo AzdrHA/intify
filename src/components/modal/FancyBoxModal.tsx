@@ -8,7 +8,7 @@ type FancyBoxModalProps = {
 }
 export const FancyBoxModal: FC<FancyBoxModalProps> = (props) => {
   const imageLoad: React.ChangeEventHandler<HTMLImageElement> = (e) => {
-    imageFormat(e.currentTarget);
+    imageFormat(e.currentTarget, window.innerWidth/1.5, window.innerHeight/1.5);
   };
 
   return (

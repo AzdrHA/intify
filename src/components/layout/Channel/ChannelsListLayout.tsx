@@ -1,52 +1,96 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {useParams} from 'react-router';
+import {generatePath, useParams} from 'react-router';
 import {GuildRouter} from '@app/type/Router/GuildRouter';
 import {ChannelSideProps} from '@app/type/Props/ChannelSideProps';
-import GuildChannelButton from '@components/style/button/GuildChannelButton';
-import {createGuildChannelSubscription} from '@app/mercure/subscription/Guild/guildChannelSubscription';
+import {useNavigate} from 'react-router-dom';
+import {ChannelType} from '@app/type/Channel/ChannelType';
+import {HashTagIcon} from '@components/style/icon/HashTagIcon';
+import {SpeakerIcon} from '@components/style/icon/SpeakerIcon';
+import {UtilsStr} from '@app/utils/UtilsStr';
+import {PlusIcon} from '@components/style/icon/PlusIcon';
+import {routesConfig} from '@app/config/routesConfig';
 import {Channel} from '@app/type/Channel/Channel';
 
 export const ChannelsListLayout: FC<ChannelSideProps> = (props: ChannelSideProps) => {
   const urlParams = useParams<GuildRouter>();
-  const channelsRef = useRef<HTMLDivElement[]>([]);
-  const [channels, setChannels] = useState<Channel[]>(props.channels);
+  const channelRef = useRef<HTMLDivElement[]>([]);
+  const location = useNavigate();
 
   useEffect(() => {
-    if (urlParams.guild) {
-      createGuildChannelSubscription(urlParams.guild, (e) => {
-        setChannels(e);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    const currentChannel = channels.find((channel) => channel.id == String(urlParams.channel));
+    const currentChannel = props.channels.find((channel) => channel.id == String(urlParams.channel));
     if (currentChannel) {
-      channelClick(channels.indexOf(currentChannel));
+      addChannelStyle(props.channels.indexOf(currentChannel));
     }
-  }, [channels, urlParams.channel]);
+  }, [urlParams.channel]);
 
-  const channelClick = (index: number) => {
-    channelsRef.current.map((div) => {
+  const addChannelStyle = (index: number) => {
+    channelRef.current.map((div) => {
       if (div.classList.contains('selected')) {
         div.classList.remove('selected');
       }
     });
-    channelsRef.current[index].classList.add('selected');
+    channelRef.current[index].classList.add('selected');
+  };
+
+  const channelClick = (channel: Channel, index: number) => {
+    if (channel.type !== ChannelType.GUILD_TEXT) return;
+    addChannelStyle(index);
+    location(
+        routesConfig.app.chat
+            .replace(':guild', String(urlParams.guild))
+            .replace(':channel', channel.id));
   };
 
   return (
     <>
       {
-        channels.map((channel, i) => {
-          return <GuildChannelButton
+        props.channels.map((channel, i) => {
+          return <div
             key={i}
-            index={i}
-            channel={channel}
-            ref={(ref) => channelsRef.current[i] = ref as HTMLDivElement}
-          />;
+            onClick={() => channelClick(channel, i)}
+            className={`relative channel-container ${ChannelType[channel.type]}`}
+            ref={(ref) => channelRef.current[i] = ref as HTMLDivElement}>
+            {
+              channel.type === ChannelType.GUILD_CATEGORY ?
+                <div className={'float-right mt-1'}>
+                  <button className={'my-auto'}>
+                    <PlusIcon/>
+                  </button>
+                </div> : null
+            }
+            <div
+              className={`channel ${ChannelType[channel.type]} ${channel.type === ChannelType.GUILD_CATEGORY ? 'flex-col-reverse items-start' : ''}`}>
+              {
+                channel.type === ChannelType.GUILD_TEXT ?
+                  <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ?
+                    <SpeakerIcon/> : null
+              }
+              <div
+                className={channel.type === ChannelType.GUILD_CATEGORY ? 'channel-name category w-full relative' : 'channel-name w-full relative'}>
+                {UtilsStr.formatToChannelName(channel.name)}
+              </div>
+            </div>
+          </div>;
         })
       }
     </>
   );
 };
+
+/*
+return <div
+onClick={() => channelClick(channel, channelRef.current[i])}
+className={`channel-container ${ChannelType[channel.type]}`}
+key={i}
+ref={(ref) => channelRef.current[i] = ref as HTMLDivElement}>
+<div className={`channel ${ChannelType[channel.type]}`}>
+  {
+    channel.type === ChannelType.GUILD_TEXT ? <HashTagIcon/> : channel.type === ChannelType.GUILD_VOICE ?
+      <SpeakerIcon/> : null
+  }
+  <div className={channel.type === ChannelType.GUILD_CATEGORY ? 'channel-name category' : 'channel-name'}>
+    {UtilsStr.formatToChannelName(channel.name)}
+  </div>
+</div>
+</div>;
+ */

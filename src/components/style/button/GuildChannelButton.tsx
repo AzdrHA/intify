@@ -9,7 +9,6 @@ import {routesConfig} from '@app/config/routesConfig';
 import {GuildRouter} from '@app/type/Router/GuildRouter';
 import {useNavigate} from 'react-router-dom';
 import {PlusIcon} from '@components/style/icon/PlusIcon';
-import {ServerCreateModal} from '@components/modal/ServerCreateModal';
 import {GuildChannelCreateModal} from '@components/modal/GuildChannelCreateModal';
 
 type GuildChannelButtonProps = {
@@ -44,8 +43,8 @@ const GuildChannelButton: ForwardRefRenderFunction<HTMLDivElement, GuildChannelB
       }
       {
         channelProps.channel.type === ChannelType.GUILD_CATEGORY ?
-          <div className={'absolute top-0 right-0 w-5 h-5 bg-green-500'}>
-            <button className={'w-full h-full bg-pink-500'} onClick={() => setModalVisible(true)}>
+          <div className={'float-right mt-1'}>
+            <button className={'my-auto'} onClick={() => setModalVisible(true)}>
               <PlusIcon/>
             </button>
           </div> : null

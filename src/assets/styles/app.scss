@@ -101,7 +101,7 @@ body {
 }
 
 .server-name-container, .chat-header-container {
-  box-shadow: 0 0 3px rgba(#000000, .5);
+  border-bottom: 1.5px solid rgba(#000000, .3);
 }
 
 .chat-header-container {
@@ -146,7 +146,7 @@ body {
     max-width: 56px;
     max-height: 100%;
     overflow-y: auto;
-    box-shadow: 3px 0 3px -3px rgba(#000000, .5) !important;
+    border-right: 1.5px solid rgba(#000000, .3);
 
     &::-webkit-scrollbar {
       width: 0;
@@ -170,7 +170,7 @@ body {
   height: 100% !important;
   max-height: 100vh !important;
   max-width: 240px !important;
-  box-shadow: 3px 0 3px -3px rgba(#000000, .5) !important;
+  border-right: 1.5px solid rgba(#000000, .3);
   overflow: hidden !important;
   display: flex;
   flex-direction: column;
@@ -584,7 +584,7 @@ body {
 .user-info-cotnainer {
   display: flex;
   align-items: center;
-  box-shadow: 0 0 3px rgba(#000000, .5);
+  border-top: 1.5px solid rgba(#000000, .3);
 }
 
 .backgroundOverlay {

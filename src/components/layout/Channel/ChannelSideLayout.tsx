@@ -7,7 +7,7 @@ import {ChannelsListLayout} from '@components/layout/Channel/ChannelsListLayout'
 import {HeaderGuildName} from '@components/guild/HeaderGuildName/HeaderGuildName';
 
 interface Yolo extends ApplicationProps {
-  guild: Guild | undefined
+  guild: Guild | null
 }
 
 export const ChannelSideLayout: FC<Yolo> = (props: Yolo) => {
