@@ -52,24 +52,25 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
     });
 
     if (urlParams.channel) {
-      /* createMessageSubscription(urlParams.channel, (e) => {
+      createMessageSubscription(urlParams.channel, (e) => {
+        console.log(JSON.parse(e.data));
         setMessages((messages) => [...messages, JSON.parse(e.data)]);
         scroll();
-      });*/
+      });
 
-      /* startTypingMessageSubscription(urlParams.channel, (e) => {
+      startTypingMessageSubscription(urlParams.channel, (e) => {
         if (JSON.parse(e.data)['id'] !== userInfo.id) {
           setUsersTyping((user) => [...user, JSON.parse(e.data)]);
         }
         console.log('startTypingMessageSubscription', e);
-      });*/
+      });
 
-      /* stopTypingMessageSubscription(urlParams.channel, (e) => {
+      stopTypingMessageSubscription(urlParams.channel, (e) => {
         console.log('stopTypingMessageSubscription', e);
         // const array = [...usersTyping]; // make a separate copy of the array
         // array.splice(2, 1);
         setUsersTyping([]);
-      });*/
+      });
     }
   }, [urlParams.channel]);
 
@@ -96,7 +97,7 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
 
     clearTimeout(writeTimeOut);
     if (!writeTimeOut) {
-      console.log('start typing');
+      // console.log('start typing');
 
       if (urlParams.channel) {
         startTypingMessagePublication(urlParams.channel, {'id': userInfo.id, 'name': userInfo.username}).then((r) => {
@@ -105,7 +106,7 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
     }
 
     setWriteTimeOut(setTimeout(() => {
-      console.log('stop typing');
+      // console.log('stop typing');
       if (urlParams.channel) {
         stopTypingMessagePublication(urlParams.channel, {'id': userInfo.id, 'name': userInfo.username}).then((r) => {
         });
@@ -115,7 +116,7 @@ export const ChatLayout: FC<ChatProps> = (props: ChatProps) => {
 
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (value.length === 0) return;
+      if (value.length === 0 && !file) return;
       sendMessage(value);
       e.currentTarget.innerHTML = '';
     }

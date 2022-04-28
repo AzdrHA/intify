@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Message} from '@app/type/Message/Message';
 import UtilsDate from '@app/utils/UtilsDate';
 import {imageFormat} from '@app/utils/imageFormat';
+import {toHTML} from 'discord-markdown';
 
 type ChatListLayout = {
   messages: Message[];
@@ -21,7 +22,9 @@ export const ChatListLayout: FC<ChatListLayout> = (props: ChatListLayout) => {
           const createdAtLastMessage = lastMessage ? new Date(lastMessage.createdAt).getTime() : false;
 
           const createdAt = new Date(message.createdAt).getTime();
+          const createdAtDate = new Date(message.createdAt).getDate();
           const now = new Date().getTime();
+          const nowDay = new Date().getDay();
           const oneDay = 8.64e+7;
           const minutesSeparation = 60 * 10000;
           const lastMsgSeparation = (createdAtLastMessage ? Boolean((createdAt - createdAtLastMessage) < minutesSeparation) : false) && lastMessage.owner.id === message.owner.id;
@@ -52,20 +55,22 @@ export const ChatListLayout: FC<ChatListLayout> = (props: ChatListLayout) => {
                       <small>
                         {
                                 (now - createdAt) < oneDay ? <>Today
-                                  at {UtilsDate.dateTransform([createdAtFormat.getHours(), createdAtFormat.getMinutes(), createdAtFormat.getSeconds()], ':')}</> : (now - createdAt) > oneDay && (now - createdAt) < (oneDay * 2) ? <>Yesterday
-                                  at {UtilsDate.dateTransform([createdAtFormat.getHours(), createdAtFormat.getMinutes(), createdAtFormat.getSeconds()], ':')}</> : <>{message.createdAt}</>
+                                  at {UtilsDate.dateTransform([createdAtFormat.getHours(), createdAtFormat.getMinutes()], ':')}</> : ((now - createdAt) > oneDay && (now - createdAt) < (oneDay * 2)) && nowDay === createdAtDate ? <>Yesterday
+                                  at {UtilsDate.dateTransform([createdAtFormat.getHours(), createdAtFormat.getMinutes()], ':')}</> : <>{message.createdAt}</>
                         }
                       </small>
                     </div>
                   </div>
                 }
-                <div className="message-wrapper-content">
-                  <div dangerouslySetInnerHTML={{__html: message.content}}
-                    className={lastMsgSeparation ? 'message-content' : 'message-content mt-0.5'}/>
-                </div>
+                {
+                  message.content ? <div className="message-wrapper-content">
+                    <div dangerouslySetInnerHTML={{__html: toHTML(message.content)}}
+                      className={lastMsgSeparation ? 'message-content' : 'message-content mt-0.5'}/>
+                  </div> : null
+                }
                 <div>
                   {
-                    message.messageAttachments.length ? <div>
+                    message.messageAttachments && message.messageAttachments.length ? <div>
                       <div>
                         {
                           message.messageAttachments.map((messageAttachment, i) => {

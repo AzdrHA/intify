@@ -78,6 +78,7 @@
     "@reduxjs/toolkit": "^1.7.2",
     "@types/react-redux": "^7.1.22",
     "axios": "^0.25.0",
+    "discord-markdown": "^2.5.1",
     "final-form": "^4.20.6",
     "js-cookie": "^3.0.1",
     "react": "^17.0.2",

@@ -7,5 +7,5 @@ export type Message = {
   createdAt: Date;
   updateAt: Date;
   owner: User;
-  messageAttachments: MessageAttachment[]
+  messageAttachments: MessageAttachment[] | null
 }

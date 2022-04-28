@@ -15,9 +15,9 @@ export const ServerSide = () => {
   useEffect(() => {
     serverRef.current[0].classList.add('active');
 
-    /* createGuildSubscription(user.id as string, (e) => {
+    createGuildSubscription(user.id as string, (e) => {
       dispatch(guildMemberSlice.actions.setDefault(e));
-    });*/
+    });
   }, []);
 
   const onClick = (index: number) => {

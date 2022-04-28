@@ -441,6 +441,14 @@ body {
 
     .message-content {
       white-space: pre-line;
+
+      a {
+        color: $primary;
+        &:hover {
+          color: rgba(130,144,196,1);
+          text-decoration: underline;
+        }
+      }
     }
 
     .message-author-avatar-container {
@@ -552,6 +560,7 @@ body {
     }
 
     .input-message {
+      width: 100%;
       font-size: 14px;
       padding: 10px 10px 10px 0;
       background: none;
